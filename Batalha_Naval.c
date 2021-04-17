@@ -1,7 +1,6 @@
 /*
 ================================================
-Feito por Felipe Spolidoro e Vinícius Windmöller
-Turma 211
+Made by Felipe Spolidoro and VinÃ­cius WindmÃ¶ller
 ================================================
 */
 //Includes
@@ -12,8 +11,8 @@ Turma 211
 #include <time.h>
 #include <conio.h>
 
-//Funções
-void resultado(int pts_jg){ // Mensagem de vitória/derrota com animação
+//FunÃ§Ãµes
+void resultado(int pts_jg){ // win/lose animation
 char msg[15] = "VitoriaDerrota";
 int i;
     if(pts_jg==14){
@@ -30,7 +29,7 @@ int i;
 }}
 printf("\n\n");
 }
-void print_op(int tab[]){ // Imprime o tabuleiro do adversário já oculto
+void print_op(int tab[]){ // print opponent hidden board
 int i,j;
 i=1,j=1;
 printf("-=Tabuleiro do adversario=-\n");
@@ -47,7 +46,7 @@ printf("\n    A B C D E F G H I J\n  ");
         j++;
     }
 }
-void print_jg(int tab[]){ // Imprime o tabuleiro do jogador
+void print_jg(int tab[]){ // print player's board
 int i,j;
 i=1,j=1;
 printf("\n-=-=-= Seu tabuleiro =-=-=-\n");
@@ -64,7 +63,7 @@ printf("\n    A B C D E F G H I J\n  ");
         j++;
     }
 }
-void fz_jgd_jg(int tab[],int tab2[],int *pts){ // Faz a jogada do jogador, inserindo ela no tabuleiro
+void fz_jgd_jg(int tab[],int tab2[],int *pts){ // player move
     char c;
     int c_int,l_int,pos,jogada;
     do{
@@ -92,10 +91,10 @@ void fz_jgd_jg(int tab[],int tab2[],int *pts){ // Faz a jogada do jogador, inser
         jogada++;
     }}while(jogada==0);
 }
-void fz_jgd_op(int tab[],int *pts,int *acts,int *acertos,int *posi){ // Faz a jogada do computador, com assistência de uma Inteligência Artificial básica
+void fz_jgd_op(int tab[],int *pts,int *acts,int *acertos,int *posi){ // opponent move, with assistance from a basic Artificial Intelligence 
 int pos, dir, soma = 0;
 srand((unsigned)(time(NULL)));
-if(*acts==1){ // Testa se as posições adjacentes são jogadas válidas
+if(*acts==1){ // Tests whether adjacent positions are valid moves
     if(*posi % 10 != 0 && tab[*posi-1] != 155 && tab[*posi-1] != 158){
         soma = soma + 1;}
     if(*posi % 10 != 9 && tab[*posi+1] != 155 && tab[*posi+1] != 158){
@@ -104,7 +103,7 @@ if(*acts==1){ // Testa se as posições adjacentes são jogadas válidas
         soma = soma + 4;}
     if(*posi < 90 && tab[*posi+10] != 155 && tab[*posi+10] != 158){
         soma = soma + 8;}
-switch(soma){ // Utiliza a soma para analizar as possíveis jogadas a serem feitas usando valores inteiros para indicar direções   0 >> Esquerda, 1 >> Cima, 2 >> Direita, 3 >> Baixo
+switch(soma){ // uses the sum to analyze the possible moves to be made using integer values to indicate directions   0 >> Left, 1 >> Up, 2 >> Right, 3 >> Down
 case 0:
     *acertos = 0;
     break;
@@ -382,7 +381,7 @@ case 15:
     break;
 }
 }
-    while(*acertos==0){ //Randomiza uma jogada até acertar um navio
+    while(*acertos==0){ //randomize a move until hit a ship
     pos = rand()%100;
     if(tab[pos]==155||tab[pos]==158){
     }else{
@@ -398,7 +397,7 @@ case 15:
         }}}
 *acertos = *acts;
 }
-void esperar(int tab_op2[],int pts_jg){ // Faz uma animação legal
+void esperar(int tab_op2[],int pts_jg){ // do a cool animation
 int i;
     for(i=0;i<3;i++){
         print_op(tab_op2);
@@ -431,14 +430,14 @@ int pts_jg = 0, pts_op = 0, acts = 0, posi = 0,acertos = 0;
 char c;
 
 op = fopen("oponente.cfg", "r");
-if (op == NULL){  // Checar se houve erro na abertura
+if (op == NULL){  // check if there was an opening error in opponent file
         printf("Problemas na abertura do arquivo oponente.cfg \n");
         return -1;}
 jg = fopen("jogador.cfg", "r");
-if (jg == NULL){  // Checar se houve erro na abertura
+if (jg == NULL){  // check if there was an opening error in player file
         printf("Problemas na abertura do arquivo jogador.cfg \n");
         return -1;}
-    while(!feof(op)){ // Ler e indexar as *posições dos navios dentro de um vetor
+    while(!feof(op)){ // read and index the positions of opponent ships within a vector
         while((c=fgetc(op))!=EOF){
             if(c=='A'){
                 tab_op[i]= 0;
@@ -448,7 +447,7 @@ if (jg == NULL){  // Checar se houve erro na abertura
                     i++;
     }}}
 i = 0;
-    while(!feof(jg)){ // Ler e indexar as *posições dos navios dentro de um vetor
+    while(!feof(jg)){ // read and index the positions of player ships within a vector
         while((c=fgetc(jg))!=EOF){
             if(c=='A'){
                 tab_jg[i]= 126;
@@ -465,7 +464,7 @@ scanf("%c",&c);
 system("cls"); // Limpa a tela
 print_op(tab_op2);
 print_jg(tab_jg);
-while(pts_jg!=14 && pts_op!=14){ // Repete as jogadas até alguém acertar todos os navios
+while(pts_jg!=14 && pts_op!=14){ // Repeat the moves until someone hits all the ships
     fz_jgd_jg(tab_op,tab_op2,&pts_jg);
     system("cls");
     if(pts_jg==14) break;
@@ -477,6 +476,6 @@ while(pts_jg!=14 && pts_op!=14){ // Repete as jogadas até alguém acertar todos o
     print_jg(tab_jg);
     printf("\t\t\tAcertos:%d\n",pts_op);
     }
-resultado(pts_jg); // Chama o resultado final
+resultado(pts_jg); // Calls the final result
 return 0;
 }
