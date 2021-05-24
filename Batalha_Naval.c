@@ -1,6 +1,6 @@
 /*
 ================================================
-Made by Felipe Spolidoro and Vinícius Windmöller
+Vinícius Windmöller
 ================================================
 */
 //Includes
